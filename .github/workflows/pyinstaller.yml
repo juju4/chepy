@@ -80,9 +80,11 @@ jobs:
           cosign sign-blob --yes --bundle dist/artifacts.sigstore.json dist/chepy/$BINARY
           ls -l dist/
           cat dist/artifacts.sigstore.json
+        if: matrix.os != 'windows-latest'
       - name: Verify cosign signature
         run: |
           cosign verify-blob --certificate-identity-regexp "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" --certificate-oidc-issuer "https://token.actions.githubusercontent.com" --bundle dist/artifacts.sigstore.json dist/chepy/$BINARY
+        if: matrix.os != 'windows-latest'
       - uses: actions/upload-artifact@v7
         with:
           name: chepy
@@ -116,7 +118,7 @@ jobs:
           sudo ldconfig
           ldd "$libmsixdir/makemsix"
           dpkg -l |grep libicu
-        if: matrix.os != 'macos-latest'
+        if: matrix.os == 'ubuntu-latest'
       - name: Pack/Unpack/Sign with pymsix
         run: |
           set -x
@@ -127,8 +129,26 @@ jobs:
           python3 gen-msix.py
           ls -l
           file *.msix
-        if: matrix.os != 'macos-latest'
+        if: matrix.os == 'ubuntu-latest'
       - name: Verify with osslsigncode
         run: |
           osslsigncode verify -in chepy.msix -CAfile certificate.crt -verbose
         if: matrix.os == 'ubuntu-latest'
+
+      - name: Setup WinApp CLI
+        uses: microsoft/setup-WinAppCli@v0.2
+        if: matrix.os == 'windows-latest'
+
+      - name: Package MSIX
+        run: |
+          winapp pack .\dist\chepy `
+            --manifest .\AppxManifest.xml `
+            --cert .\certificate.pfx
+        if: matrix.os == 'windows-latest'
+
+      - name: Upload MSIX
+        uses: actions/upload-artifact@v7
+        with:
+          name: chepy-msix
+          path: "*.msix"
+        if: matrix.os == 'windows-latest'
