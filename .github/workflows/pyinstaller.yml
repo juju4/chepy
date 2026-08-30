@@ -64,18 +64,12 @@ jobs:
       # https://www.qcecuring.com/blog/sigstore-cosign-keyless-github-actions
       - name: Sign file with GitHub OIDC Token
         run: |
-          cosign sign-blob --yes \
-            --bundle dist/artifacts.sigstore.json \
-            dist/chepy/chepy
+          cosign sign-blob --yes --bundle dist/artifacts.sigstore.json dist/chepy/chepy
           ls -l dist/
           cat dist/artifacts.sigstore.json
       - name: Verify cosign signature
         run: |
-          cosign verify-blob \
-            --certificate-identity-regexp "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" \
-            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-            --bundle dist/artifacts.sigstore.json \
-            dist/chepy/chepy
+          cosign verify-blob --certificate-identity-regexp "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" --certificate-oidc-issuer "https://token.actions.githubusercontent.com" --bundle dist/artifacts.sigstore.json dist/chepy/chepy
       - uses: actions/upload-artifact@v7
         with:
           name: chepy
