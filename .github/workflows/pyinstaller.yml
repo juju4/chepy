@@ -108,7 +108,7 @@ jobs:
           set -x
           pip install pymsix==1.1.5
           pip show pymsix
-          libmsixpath=$(find / -name libmsix.so -ls 2>/dev/null | head -1)
+          libmsixpath=$(find / -name libmsix.so 2>/dev/null | head -1)
           chmod +x /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/libmsix.so /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/makemsix
           echo $libmsixpath | sudo tee /etc/ld.so.conf.d/makemsix.conf
           sudo ldconfig
