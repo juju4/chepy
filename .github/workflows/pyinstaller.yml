@@ -92,14 +92,23 @@ jobs:
             -passout pass:test
           ls -l
 
-      - name: Install pymsix and dependencies
+      - name: Install osslsigncode - Linux
         run: |
           set -x
           sudo apt-get install -y osslsigncode
+        if: matrix.os == 'ubuntu-latest'
+      - name: Install pymsix and dependencies
+        run: |
+          set -x
           pip install pymsix==1.1.5
           pip show pymsix
-          find / -name libmsix.so -ls
+          libmsixpath=$(find / -name libmsix.so -ls 2>/dev/null | head -1)
+          chmod +x /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/libmsix.so /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/makemsix
+          echo $libmsixpath | sudo tee /etc/ld.so.conf.d/makemsix.conf
+          sudo ldconfig
+          ldd $(dirname $libmsixpath)/makemsix
           dpkg -l |grep libicu
+        if: matrix.os != 'macos-latest'
       - name: Pack/Unpack/Sign with pymsix
         run: |
           set -x
@@ -110,6 +119,8 @@ jobs:
           python3 gen-msix.py
           ls -l
           file *.msix
+        if: matrix.os != 'macos-latest'
       - name: Verify with osslsigncode
         run: |
           osslsigncode verify -in chepy.msix -CAfile certificate.crt -verbose
+        if: matrix.os == 'ubuntu-latest'
