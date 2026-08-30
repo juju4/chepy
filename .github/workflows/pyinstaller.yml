@@ -149,7 +149,7 @@ jobs:
         run: |
           winapp pack .\dist\chepy `
             --manifest .\AppxManifest.xml `
-            --cert .\certificate.pfx
+            --cert .\chepy\devcert.pfx
         if: matrix.os == 'windows-latest'
 
       - name: Upload MSIX
