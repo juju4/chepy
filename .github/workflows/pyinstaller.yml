@@ -20,23 +20,24 @@ jobs:
           - os: 'ubuntu-latest'
             experimental: false
             binary_name: chepy
+            python_version: "3.12"
           - os: 'windows-latest'
             experimental: false
             binary_name: chepy.exe
+            python_version: "3.12"
           - os: 'macOS-latest'
             experimental: false
             binary_name: chepy
-        python-version: 
-          - "3.12"
+            python_version: "3.12"
     env:
       BINARY: ${{ matrix.binary_name }}
 
     steps:
       - uses: actions/checkout@v7
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python_version }}
         uses: actions/setup-python@v7
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python_version }}
           cache: 'pip'
 
       - name: Install
