@@ -122,7 +122,7 @@ jobs:
           set -x
           pwd
           ls -l
-          cp AppxManifest.xml dist/
+          cp AppxManifest.xml dist/chepy/
           ls -l dist
           python3 gen-msix.py
           ls -l
