@@ -64,7 +64,7 @@ jobs:
       - name: Sign file with GitHub OIDC Token
         run: |
           cosign sign-blob --yes \
-            --bundle dist \
+            --bundle dist/artifacts.sigstore.json \
             dist/chepy/chepy
           ls -l dist/
       - name: Verify cosign signature
@@ -72,7 +72,7 @@ jobs:
           cosign verify-blob \
             --certificate-identity "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" \
             --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-            --bundle dist/*.sigstore.json \
+            --bundle dist/artifacts.sigstore.json \
             dist/chepy/chepy
       - uses: actions/upload-artifact@v7
         with:
