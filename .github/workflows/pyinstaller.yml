@@ -36,12 +36,18 @@ jobs:
           pip install .[extras]
         
       # or https://github.com/sayyid5416/pyinstaller
-      - name: Create pyinstaller Executable
+      - name: Create pyinstaller Executable - non-Windows
         run: |
           set -x
           pip install pyinstaller
           pyinstaller --clean -y --name chepy cli.py
           ls -lR dist/
+        if: matrix.os != 'windows-latest'
+      - name: Create pyinstaller Executable - Windows
+        run: |
+          pip install pyinstaller
+          pyinstaller --clean -y --name chepy cli.py
+        if: matrix.os == 'windows-latest'
 
       - name: Generate checksum
         run: |
