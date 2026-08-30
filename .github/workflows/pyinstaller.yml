@@ -67,10 +67,11 @@ jobs:
             --bundle dist/artifacts.sigstore.json \
             dist/chepy/chepy
           ls -l dist/
+          cat dist/artifacts.sigstore.json
       - name: Verify cosign signature
         run: |
           cosign verify-blob \
-            --certificate-identity "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" \
+            --certificate-identity-regexp "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" \
             --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
             --bundle dist/artifacts.sigstore.json \
             dist/chepy/chepy
