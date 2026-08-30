@@ -52,6 +52,7 @@ jobs:
       - name: Generate checksum
         run: |
           sha256sum dist/chepy/* | tee dist/chepy.sha256
+        continue-on-error: true
 
       - name: Install Cosign
         uses: sigstore/cosign-installer@v4.1.2
