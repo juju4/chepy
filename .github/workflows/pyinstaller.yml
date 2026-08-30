@@ -100,6 +100,7 @@ jobs:
             -passin pass:test \
             -passout pass:test
           ls -l
+        continue-on-error: true
 
       - name: Install osslsigncode - Linux
         run: |
@@ -137,6 +138,11 @@ jobs:
 
       - name: Setup WinApp CLI
         uses: microsoft/setup-WinAppCli@v0.2
+        if: matrix.os == 'windows-latest'
+
+      - name: Generate development certificate
+        run: |
+          winapp cert generate --if-exists skip
         if: matrix.os == 'windows-latest'
 
       - name: Package MSIX
