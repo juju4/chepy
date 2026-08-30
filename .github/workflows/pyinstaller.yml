@@ -110,10 +110,11 @@ jobs:
           pip install pymsix==1.1.5
           pip show pymsix
           libmsixpath=$(find / -name libmsix.so 2>/dev/null | head -1)
+          libmsixdir=$(dirname $libmsixpath)
           chmod +x /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/libmsix.so /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/makemsix
-          echo $libmsixpath | sudo tee /etc/ld.so.conf.d/makemsix.conf
+          echo $libmsixdir | sudo tee /etc/ld.so.conf.d/makemsix.conf
           sudo ldconfig
-          ldd $(dirname $libmsixpath)/makemsix
+          ldd "$libmsixdir/makemsix"
           dpkg -l |grep libicu
         if: matrix.os != 'macos-latest'
       - name: Pack/Unpack/Sign with pymsix
