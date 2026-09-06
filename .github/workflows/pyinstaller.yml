@@ -185,6 +185,7 @@ jobs:
           winapp pack .\dist\chepy `
             --manifest .\AppxManifest.xml `
             --cert D:\a\chepy\chepy\devcert.pfx
+            --verbose
           dir d:\a\chepy\chepy
         continue-on-error: true
 
