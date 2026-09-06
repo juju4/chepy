@@ -183,6 +183,11 @@ jobs:
       - name: Generate development certificate
         run: |
           winapp cert generate --if-exists skip
+      - name: Import PfxCertificate with winapp
+        shell: pwsh
+        run: |
+          winapp cert info D:\a\chepy\chepy\devcert.pfx
+          winapp cert install D:\a\chepy\chepy\devcert.pfx
       - name: Import PfxCertificate
         shell: pwsh
         run: |
