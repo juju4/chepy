@@ -186,7 +186,8 @@ jobs:
       - name: Import PfxCertificate
         shell: pwsh
         run: |
-          Import-PfxCertificate -FilePath D:\a\chepy\chepy\devcert.pfx -CertStoreLocation Cert:\CurrentUser\My
+          $secureString = ConvertTo-SecureString "password" -AsPlainText -Force
+          Import-PfxCertificate -FilePath D:\a\chepy\chepy\devcert.pfx -CertStoreLocation Cert:\CurrentUser\My -Password $secureString
         continue-on-error: true
 
       - name: Validate AppManifest
