@@ -203,6 +203,7 @@ jobs:
             --cert D:\a\chepy\chepy\devcert.pfx `
             --verbose
           dir d:\a\chepy\chepy
+          signtool verify d:\a\chepy\chepy\com.chepy.chepy_*.msix
         continue-on-error: true
 
       - name: Package MSIX - makeappx
@@ -216,7 +217,6 @@ jobs:
         shell: pwsh
         run: |
           Add-AppxPackage d:\a\chepy\chepy\com.chepy.chepy_*.msix
-          signtool verify d:\a\chepy\chepy\com.chepy.chepy_*.msix
         continue-on-error: true
 
       - name: Test application
