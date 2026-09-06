@@ -11,7 +11,7 @@
     <Resource Language="en-us"/>
   </Resources>
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="" MaxVersionTested=""/>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.16299.0" MaxVersionTested="10.0.21301.0"/>
   </Dependencies>
   <Capabilities/>
   <Applications>
