@@ -180,6 +180,19 @@ jobs:
         run: |
           winapp cert generate --if-exists skip
 
+      - name: Validate AppManifest
+        shell: pwsh
+        run: |
+          Install-Module -Name msix
+          Test-MsixManifest -Path .\AppxManifest.xml
+        continue-on-error: true
+
+      - name: Validate AppManifest (2)
+        shell: pwsh
+        run: |
+          Add-AppxPackage –Register .\AppxManifest.xml
+        continue-on-error: true
+
       - name: Package MSIX - winapp
         run: |
           winapp pack .\dist\chepy `
