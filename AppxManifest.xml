@@ -16,7 +16,7 @@
   <Capabilities/>
   <Applications>
     <Application Id="chepy.exe" Executable="chepy.exe" uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL">
-      <uap:VisualElements DisplayName="" Description="" Square150x150Logo="" Square44x44Logo="" BackgroundColor=""/>
+      <uap:VisualElements DisplayName="Chepy" Description="Test package" BackgroundColor="#FFFFFF"/>
     </Application>
   </Applications>
 </Package>
