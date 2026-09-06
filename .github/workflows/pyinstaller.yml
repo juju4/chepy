@@ -186,7 +186,8 @@ jobs:
       - name: Import PfxCertificate
         shell: pwsh
         run: |
-          Import-PfxCertificate -FilePath D:\a\chepy\chepy\devcert.pfx
+          Import-PfxCertificate -FilePath D:\a\chepy\chepy\devcert.pfx -CertStoreLocation Cert:\CurrentUser\My
+        continue-on-error: true
 
       - name: Validate AppManifest
         shell: pwsh
