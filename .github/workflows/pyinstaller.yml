@@ -183,6 +183,10 @@ jobs:
       - name: Generate development certificate
         run: |
           winapp cert generate --if-exists skip
+      - name: Import PfxCertificate
+        shell: pwsh
+        run: |
+          Import-PfxCertificate -FilePath D:\a\chepy\chepy\devcert.pfx
 
       - name: Validate AppManifest
         shell: pwsh
