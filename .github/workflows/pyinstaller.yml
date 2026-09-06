@@ -93,6 +93,9 @@ jobs:
         run: |
           set -x
           sudo apt-get install -y osslsigncode
+      - name: Validate AppxManifest.xml with xmllint
+        run: |
+          xmllint --format AppxManifest.xml
       - name: Install pymsix and dependencies
         run: |
           set -x
