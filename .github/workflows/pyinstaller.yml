@@ -216,6 +216,7 @@ jobs:
         shell: pwsh
         run: |
           Add-AppxPackage d:\a\chepy\chepy\com.chepy.chepy_*.msix
+          signtool verify d:\a\chepy\chepy\com.chepy.chepy_*.msix
         continue-on-error: true
 
       - name: Test application
