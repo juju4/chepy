@@ -5,7 +5,7 @@
     <DisplayName>Chepy</DisplayName>
     <PublisherDisplayName>MyCompany</PublisherDisplayName>
     <Description>Test package for chepy</Description>
-    <Logo>images\icon.png</Logo>
+    <Logo>logo.png</Logo>
   </Properties>
   <Resources>
     <Resource Language="en-us"/>
@@ -16,7 +16,7 @@
   <Capabilities/>
   <Applications>
     <Application Id="chepy.exe" Executable="chepy.exe" uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL">
-      <uap:VisualElements DisplayName="Chepy" Description="Test package" BackgroundColor="#FFFFFF"/>
+      <uap:VisualElements DisplayName="Chepy" Description="Test package" Square150x150Logo="logo.png" Square44x44Logo="logo.png" BackgroundColor="#FFFFFF"/>
     </Application>
   </Applications>
 </Package>
