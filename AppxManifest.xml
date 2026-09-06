@@ -17,7 +17,7 @@
     <rescap:Capability Name="runFullTrust"/>
   </Capabilities>
   <Applications>
-    <Application Id="chepy.exe" Executable="chepy.exe" uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL">
+    <Application Id="chepy.exe" Executable="chepy.exe" uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements DisplayName="Chepy" Description="Test package" Square150x150Logo="logo.png" Square44x44Logo="logo.png" BackgroundColor="#FFFFFF"/>
     </Application>
   </Applications>
