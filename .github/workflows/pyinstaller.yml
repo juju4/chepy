@@ -215,13 +215,13 @@ jobs:
       - name: Install MSIX
         shell: pwsh
         run: |
-          Add-AppxPackage chepix.msix
+          Add-AppxPackage d:\a\chepy\chepy\com.chepy.chepy_*.msix
         continue-on-error: true
 
       - name: Test application
         shell: pwsh
         run: |
-          $package = Get-AppxPackage -Name "ChepyCompany.Chepy"
+          $package = Get-AppxPackage -Name "com.chepy.chepy"
 
           if (-not $package) {
             throw "MSIX package was not installed"
