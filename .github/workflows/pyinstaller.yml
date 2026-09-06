@@ -183,6 +183,7 @@ jobs:
       - name: Validate AppManifest
         shell: pwsh
         run: |
+          $ProgressPreference = "SilentlyContinue"
           Install-Module -Name msix
           Test-MsixManifest -Path .\AppxManifest.xml
         continue-on-error: true
