@@ -4,7 +4,7 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
-  <Identity Name="ChepyCompany.Chepy"
+  <Identity Name="com.chepy.chepy"
           Version="1.0.0.0"
           Publisher="CN=MyCompany, O=MyCompany, L=MyCity, S=MyState, C=MyCountry"
 	  ProcessorArchitecture="x64">
