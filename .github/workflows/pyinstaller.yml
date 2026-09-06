@@ -8,8 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  pyinstaller:
-
+  pyinstaller-linux:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -21,10 +20,213 @@ jobs:
             experimental: false
             binary_name: chepy
             python_version: "3.12"
+    env:
+      BINARY: ${{ matrix.binary_name }}
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python_version }}
+          cache: 'pip'
+
+      - name: Install
+        # if: steps.devcache.outs.cache-hit != 'true'
+        run: |
+          git submodule update --init --recursive
+          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install .[extras]
+
+      # or https://github.com/sayyid5416/pyinstaller
+      - name: Create pyinstaller Executable - non-Windows
+        run: |
+          set -x
+          pip install pyinstaller
+          pyinstaller --clean -y --name chepy cli.py
+          ls -lR dist/
+      - name: Create pyinstaller Executable - Windows
+        run: |
+          pip install pyinstaller
+          pyinstaller --clean -y --name chepy cli.py
+
+      - name: Generate checksum
+        run: |
+          sha256sum dist/chepy/* | tee dist/chepy.sha256
+        continue-on-error: true
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v4.1.2
+        with:
+          cosign-release: 'v3.1.3'
+      - name: Check install!
+        run: cosign version
+      # https://docs.sigstore.dev/cosign/signing/signing_with_blobs/
+      # https://www.qcecuring.com/blog/sigstore-cosign-keyless-github-actions
+      - name: Sign file with GitHub OIDC Token
+        run: |
+          cosign sign-blob --yes --bundle dist/artifacts.sigstore.json dist/chepy/$BINARY
+          ls -l dist/
+          cat dist/artifacts.sigstore.json
+      - name: Verify cosign signature
+        run: |
+          cosign verify-blob --certificate-identity-regexp "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" --certificate-oidc-issuer "https://token.actions.githubusercontent.com" --bundle dist/artifacts.sigstore.json dist/chepy/$BINARY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: chepy
+          path: dist/*
+
+      - name: Create one-time usage test certificate
+        run: |
+          set -x
+          openssl genpkey -algorithm RSA -aes-256-cbc -out privatekey.key -pkeyopt rsa_keygen_bits:2048 -pass pass:test
+          openssl req -new -key privatekey.key -out request.csr -passin pass:test -subj "/C=GB/CN=foo"
+          openssl x509 -req -in request.csr -signkey privatekey.key -out certificate.crt -days 1 -sha256 -passin pass:test
+          openssl pkcs12 -export -in certificate.crt -inkey privatekey.key -out certificate.pfx \
+            -passin pass:test \
+            -passout pass:test
+          ls -l
+        continue-on-error: true
+
+      - name: Install osslsigncode - Linux
+        run: |
+          set -x
+          sudo apt-get install -y osslsigncode
+      - name: Install pymsix and dependencies
+        run: |
+          set -x
+          pip install pymsix==1.1.5
+          pip show pymsix
+          libmsixpath=$(find / -name libmsix.so 2>/dev/null | head -1)
+          libmsixdir=$(dirname $libmsixpath)
+          chmod +x /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/libmsix.so /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/makemsix
+          echo $libmsixdir | sudo tee /etc/ld.so.conf.d/makemsix.conf
+          sudo ldconfig
+          ldd "$libmsixdir/makemsix"
+          dpkg -l |grep libicu
+      - name: Pack/Unpack/Sign with pymsix
+        run: |
+          set -x
+          pwd
+          ls -l
+          cp AppxManifest.xml dist/chepy/
+          ls -l dist
+          python3 gen-msix.py
+          ls -l
+          file *.msix
+        if: matrix.os == 'ubuntu-latest'
+      - name: Verify with osslsigncode
+        run: |
+          osslsigncode verify -in chepy.msix -CAfile certificate.crt -verbose
+
+  pyinstaller-win-makeappx:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
           - os: 'windows-latest'
             experimental: false
             binary_name: chepy.exe
             python_version: "3.12"
+    env:
+      BINARY: ${{ matrix.binary_name }}
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python_version }}
+          cache: 'pip'
+
+      - name: Install
+        # if: steps.devcache.outs.cache-hit != 'true'
+        run: |
+          git submodule update --init --recursive
+          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install .[extras]
+
+      - name: Create pyinstaller Executable - Windows
+        run: |
+          pip install pyinstaller
+          pyinstaller --clean -y --name chepy cli.py
+
+      - name: Generate checksum
+        run: |
+          sha256sum dist/chepy/* | tee dist/chepy.sha256
+        continue-on-error: true
+
+      - name: Create one-time usage test certificate
+        run: |
+          set -x
+          openssl genpkey -algorithm RSA -aes-256-cbc -out privatekey.key -pkeyopt rsa_keygen_bits:2048 -pass pass:test
+          openssl req -new -key privatekey.key -out request.csr -passin pass:test -subj "/C=GB/CN=foo"
+          openssl x509 -req -in request.csr -signkey privatekey.key -out certificate.crt -days 1 -sha256 -passin pass:test
+          openssl pkcs12 -export -in certificate.crt -inkey privatekey.key -out certificate.pfx \
+            -passin pass:test \
+            -passout pass:test
+          ls -l
+        continue-on-error: true
+
+      - name: Setup WinApp CLI
+        uses: microsoft/setup-WinAppCli@v0.2
+
+      - name: Generate development certificate
+        run: |
+          winapp cert generate --if-exists skip
+
+      - name: Package MSIX - winapp
+        run: |
+          winapp pack .\dist\chepy `
+            --manifest .\AppxManifest.xml `
+            --cert D:\a\chepy\chepy\devcert.pfx
+          dir d:\a\chepy\chepy
+        continue-on-error: true
+
+      - name: Package MSIX - makeappx
+        run: |
+          makeappx.exe pack /d .\dist\chepy\ /p chepy.msix
+          signtool sign /fd sha256 /v /sm /s TrustedPeople /a /t http://timestamp.digicert.com /f D:\a\chepy\chepy\devcert.pfx .\chepy.msix
+          signtool verify chepy.msix
+        continue-on-error: true
+
+      - name: Install MSIX
+        shell: pwsh
+        run: |
+          Add-AppxPackage chepix.msix
+        continue-on-error: true
+
+      - name: Test application
+        shell: pwsh
+        run: |
+          $package = Get-AppxPackage -Name "ChepyCompany.Chepy"
+
+          if (-not $package) {
+            throw "MSIX package was not installed"
+          }
+
+          Write-Host "Installed: $($package.FullName)"
+        continue-on-error: true
+
+      - name: Upload MSIX
+        uses: actions/upload-artifact@v7
+        with:
+          name: chepy-msix
+          path: "*.msix"
+
+  pyinstaller-macos:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
           - os: 'macOS-latest'
             experimental: false
             binary_name: chepy
@@ -47,7 +249,7 @@ jobs:
           pip install -r requirements.txt
           python -m pip install --upgrade pip
           pip install .[extras]
-        
+
       # or https://github.com/sayyid5416/pyinstaller
       - name: Create pyinstaller Executable - non-Windows
         run: |
@@ -55,12 +257,6 @@ jobs:
           pip install pyinstaller
           pyinstaller --clean -y --name chepy cli.py
           ls -lR dist/
-        if: matrix.os != 'windows-latest'
-      - name: Create pyinstaller Executable - Windows
-        run: |
-          pip install pyinstaller
-          pyinstaller --clean -y --name chepy cli.py
-        if: matrix.os == 'windows-latest'
 
       - name: Generate checksum
         run: |
@@ -90,71 +286,3 @@ jobs:
           name: chepy
           path: dist/*
 
-      - name: Create one-time usage test certificate
-        run: |
-          set -x
-          openssl genpkey -algorithm RSA -aes-256-cbc -out privatekey.key -pkeyopt rsa_keygen_bits:2048 -pass pass:test
-          openssl req -new -key privatekey.key -out request.csr -passin pass:test -subj "/C=GB/CN=foo"
-          openssl x509 -req -in request.csr -signkey privatekey.key -out certificate.crt -days 1 -sha256 -passin pass:test
-          openssl pkcs12 -export -in certificate.crt -inkey privatekey.key -out certificate.pfx \
-            -passin pass:test \
-            -passout pass:test
-          ls -l
-        continue-on-error: true
-
-      - name: Install osslsigncode - Linux
-        run: |
-          set -x
-          sudo apt-get install -y osslsigncode
-        if: matrix.os == 'ubuntu-latest'
-      - name: Install pymsix and dependencies
-        run: |
-          set -x
-          pip install pymsix==1.1.5
-          pip show pymsix
-          libmsixpath=$(find / -name libmsix.so 2>/dev/null | head -1)
-          libmsixdir=$(dirname $libmsixpath)
-          chmod +x /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/libmsix.so /opt/hostedtoolcache/Python/3.*/x64/lib/python3.*/site-packages/msix/bin/makemsix
-          echo $libmsixdir | sudo tee /etc/ld.so.conf.d/makemsix.conf
-          sudo ldconfig
-          ldd "$libmsixdir/makemsix"
-          dpkg -l |grep libicu
-        if: matrix.os == 'ubuntu-latest'
-      - name: Pack/Unpack/Sign with pymsix
-        run: |
-          set -x
-          pwd
-          ls -l
-          cp AppxManifest.xml dist/chepy/
-          ls -l dist
-          python3 gen-msix.py
-          ls -l
-          file *.msix
-        if: matrix.os == 'ubuntu-latest'
-      - name: Verify with osslsigncode
-        run: |
-          osslsigncode verify -in chepy.msix -CAfile certificate.crt -verbose
-        if: matrix.os == 'ubuntu-latest'
-
-      - name: Setup WinApp CLI
-        uses: microsoft/setup-WinAppCli@v0.2
-        if: matrix.os == 'windows-latest'
-
-      - name: Generate development certificate
-        run: |
-          winapp cert generate --if-exists skip
-        if: matrix.os == 'windows-latest'
-
-      - name: Package MSIX
-        run: |
-          winapp pack .\dist\chepy `
-            --manifest .\AppxManifest.xml `
-            --cert .\chepy\devcert.pfx
-        if: matrix.os == 'windows-latest'
-
-      - name: Upload MSIX
-        uses: actions/upload-artifact@v7
-        with:
-          name: chepy-msix
-          path: "*.msix"
-        if: matrix.os == 'windows-latest'
