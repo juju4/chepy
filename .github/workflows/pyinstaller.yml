@@ -190,13 +190,11 @@ jobs:
           $ProgressPreference = "SilentlyContinue"
           Install-Module -Name msix -Force
           Test-MsixManifest -Path .\AppxManifest.xml
-        continue-on-error: true
 
       - name: Validate AppManifest (2)
         shell: pwsh
         run: |
           Add-AppxPackage –Register .\AppxManifest.xml
-        continue-on-error: true
 
       - name: Package MSIX - winapp
         run: |
