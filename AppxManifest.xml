@@ -4,7 +4,7 @@
   <Properties>
     <DisplayName>Chepy</DisplayName>
     <PublisherDisplayName>MyCompany</PublisherDisplayName>
-    <Description>Test package for chepy<Description/>
+    <Description>Test package for chepy</Description>
     <Logo>images\icon.png</Logo>
   </Properties>
   <Resources>
