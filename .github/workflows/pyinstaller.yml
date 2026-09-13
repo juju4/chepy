@@ -214,7 +214,7 @@ jobs:
             --cert D:\a\chepy\chepy\devcert.pfx `
             --verbose
           dir d:\a\chepy\chepy
-          winapp tool signtool verify d:\a\chepy\chepy\com.chepy.chepy_*.msix
+          winapp tool signtool verify d:\a\chepy\chepy\com.chepy.chepy_*.msix --verbose
         continue-on-error: true
 
       - name: Package MSIX - makeappx
