@@ -10,6 +10,7 @@ from msix import MsixPacker  # type: ignore
 packer = MsixPacker(verbose=True)
 APP_NAME = "chepy"
 OUTPUT_DIR = "output"
+TMPUNPACK_DIR = "/tmp"
 
 output_path = Path(OUTPUT_DIR)
 try:
@@ -23,10 +24,11 @@ except Exception as exc:
     print(f"An error occurred: {exc}")
 
 packer.pack("dist/chepy", f"{OUTPUT_DIR}/{APP_NAME}.msix")
-packer.unpack(f"output/{APP_NAME}.msix", "/tmp/extracted/")
 packer.sign(
     f"{OUTPUT_DIR}/{APP_NAME}.msix",
     "certificate.pfx",
     pfx_password="test",
     timestamp_url="http://timestamp.digicert.com",
 )
+
+packer.unpack(f"output/{APP_NAME}.msix", TMPUNPACK_DIR)
