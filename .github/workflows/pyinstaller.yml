@@ -117,9 +117,12 @@ jobs:
           cp AppxManifest.xml dist/chepy/
           ls -l dist
           python3 gen-msix.py
-          ls -l
-          file *.msix
-        if: matrix.os == 'ubuntu-latest'
+      - name: Check pymsix output
+        run: |
+          ls -l . output/
+          file *.msix output/*.msix
+        if: ${{ always() }}
+        continue-on-error: true
       - name: Verify with osslsigncode
         run: |
           osslsigncode verify -in chepy.msix -CAfile certificate.crt -verbose
