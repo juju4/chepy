@@ -92,7 +92,7 @@ jobs:
         run: |
           set -x
           openssl genpkey -algorithm RSA -aes-256-cbc -out privatekey.key -pkeyopt rsa_keygen_bits:2048 -pass pass:test
-          openssl req -new -key privatekey.key -out request.csr -passin pass:test -subj "/C=GB/CN=foo"
+          openssl req -new -key privatekey.key -out request.csr -passin pass:test -subj "/C=GB/CN=foo" -addext "keyUsage=digitalSignature" -addext "extendedKeyUsage=codeSigning"
           openssl x509 -req -in request.csr -signkey privatekey.key -out certificate.crt -days 1 -sha256 -passin pass:test
           openssl pkcs12 -export -in certificate.crt -inkey privatekey.key -out certificate.pfx \
             -passin pass:test \
@@ -153,7 +153,7 @@ jobs:
         continue-on-error: true
       - name: Verify with osslsigncode
         run: |
-          osslsigncode verify -in chepy.msix -CAfile certificate.crt -verbose
+          osslsigncode verify -in output/chepy.msix -CAfile certificate.crt -verbose
 
   pyinstaller-win-makeappx:
     runs-on: ${{ matrix.os }}
