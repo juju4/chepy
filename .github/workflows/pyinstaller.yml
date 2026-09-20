@@ -69,6 +69,13 @@ jobs:
           sha256sum dist/chepy/* | tee dist/chepy.sha256
         continue-on-error: true
 
+      - name: Check binary with blint
+        run: |
+          set -x
+          uvx blint -i dist/chepy/* -o blintout
+          for f in blintout/*.json; do cat $f | jq; done
+        continue-on-error: true
+
       - name: Install Cosign
         uses: sigstore/cosign-installer@v4.1.2
         with:
