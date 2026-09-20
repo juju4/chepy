@@ -20,6 +20,7 @@
 
 # Chepy
 
+This fork is mostly a [packaging](PACKAGING.md) test.
 
 ![Solving a CTF with Chepy](https://raw.githubusercontent.com/securisec/chepy/master/docs/assets/ctf.gif)
 
