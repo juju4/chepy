@@ -120,6 +120,23 @@ jobs:
           file *.msix output/*.msix
         if: ${{ always() }}
         continue-on-error: true
+      - name: Unpack pymsix output
+        run: |
+          python3 unpack-msix.py
+        if: ${{ always() }}
+        continue-on-error: true
+      - name: Add self-signed cert to system trust store
+        run: |
+          sudo install -m 0644 certificate.crt /usr/share/ca-certificates/
+          echo certificate.crt | sudo tee -a /etc/ca-certificates.conf
+          sudo update-ca-certificates
+        if: ${{ always() }}
+        continue-on-error: true
+      - name: Unpack pymsix output (2)
+        run: |
+          python3 unpack-msix.py
+        if: ${{ always() }}
+        continue-on-error: true
       - name: Verify with osslsigncode
         run: |
           osslsigncode verify -in chepy.msix -CAfile certificate.crt -verbose

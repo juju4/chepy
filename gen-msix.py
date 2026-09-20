@@ -30,5 +30,3 @@ packer.sign(
     pfx_password="test",
     timestamp_url="http://timestamp.digicert.com",
 )
-
-packer.unpack(f"output/{APP_NAME}.msix", TMPUNPACK_DIR)
