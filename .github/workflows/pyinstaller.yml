@@ -311,7 +311,7 @@ jobs:
       - name: Upload MSIX
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ env.BINARY }}
+          name: ${{ env.BINARY }}-msix
           path: "*.msix"
 
   pyinstaller-macos:
