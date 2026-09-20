@@ -17,11 +17,12 @@ jobs:
       matrix:
         include:
           - os: 'ubuntu-latest'
+            architecture: x86_64
             experimental: false
             binary_name: chepy
             python_version: "3.12"
     env:
-      BINARY: ${{ matrix.binary_name }}
+      BINARY: ${{ matrix.binary_name }}-${{ matrix.os }}-${{ matrix.architecture }}-${{github.ref_name}}
 
     steps:
       - uses: actions/checkout@v7
@@ -40,16 +41,12 @@ jobs:
           pip install .[extras]
 
       # or https://github.com/sayyid5416/pyinstaller
-      - name: Create pyinstaller Executable - non-Windows
+      - name: Create pyinstaller Executable
         run: |
           set -x
           pip install pyinstaller
-          pyinstaller --clean -y --name chepy cli.py
+          pyinstaller --clean -y --name $BINARY cli.py
           ls -lR dist/
-      - name: Create pyinstaller Executable - Windows
-        run: |
-          pip install pyinstaller
-          pyinstaller --clean -y --name chepy cli.py
 
       - name: Generate checksum
         run: |
@@ -136,11 +133,12 @@ jobs:
       matrix:
         include:
           - os: 'windows-latest'
+            architecture: x86_64
             experimental: false
             binary_name: chepy.exe
             python_version: "3.12"
     env:
-      BINARY: ${{ matrix.binary_name }}
+      BINARY: ${{ matrix.binary_name }}-${{ matrix.os }}-${{ matrix.architecture }}-${{github.ref_name}}
 
     steps:
       - uses: actions/checkout@v7
@@ -161,7 +159,7 @@ jobs:
       - name: Create pyinstaller Executable - Windows
         run: |
           pip install pyinstaller
-          pyinstaller --clean -y --name chepy cli.py
+          pyinstaller --clean -y --name $BINARY cli.py
 
       - name: Generate checksum
         run: |
@@ -278,11 +276,12 @@ jobs:
       matrix:
         include:
           - os: 'macOS-latest'
+            architecture: arm64
             experimental: false
             binary_name: chepy
             python_version: "3.12"
     env:
-      BINARY: ${{ matrix.binary_name }}
+      BINARY: ${{ matrix.binary_name }}-${{ matrix.os }}-${{ matrix.architecture }}-${{github.ref_name}}
 
     steps:
       - uses: actions/checkout@v7
@@ -305,7 +304,7 @@ jobs:
         run: |
           set -x
           pip install pyinstaller
-          pyinstaller --clean -y --name chepy cli.py
+          pyinstaller --clean -y --name $BINARY cli.py
           ls -lR dist/
 
       - name: Generate checksum
