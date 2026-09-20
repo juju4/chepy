@@ -319,7 +319,7 @@ jobs:
             python_version: "3.12"
     env:
       SPECNAME: chepy
-      BINARY: ${{ matrix.binary_name }}-${{ matrix.os_macos }}-${{ matrix.architecture }}-${{github.ref_name}}
+      BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
 
     steps:
       - uses: actions/checkout@v7
