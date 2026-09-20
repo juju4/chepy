@@ -195,7 +195,7 @@ jobs:
         run: |
           pip install pyinstaller
           pyinstaller --clean -y --name $env:SPECNAME cli.py
-          move dist/$env:SPECNAME/$env:SPECNAME dist/$env:SPECNAME/$env:BINARY
+          Move-Item d:\a\chepy\chepy\dist\$env:SPECNAME\$env:SPECNAME d:\a\chepy\chepy\dist\$env:SPECNAME\$env:BINARY
 
       - name: Generate checksum
         run: |
