@@ -156,6 +156,11 @@ jobs:
       - name: Verify with osslsigncode
         run: |
           osslsigncode verify -in output/chepy.msix -CAfile certificate.crt -verbose
+      - name: Upload MSIX
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.BINARY }}-mixed.msix
+          path: output/chepy.msix
 
   pyinstaller-win-makeappx:
     runs-on: ${{ matrix.os }}
