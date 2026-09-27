@@ -10,5 +10,6 @@ packer = MsixPacker(verbose=True)
 APP_NAME = "chepy"
 OUTPUT_DIR = "output"
 TMPUNPACK_DIR = "/tmp"
+CERT_VALIDATE = False
 
-packer.unpack(f"{OUTPUT_DIR}/{APP_NAME}.msix", TMPUNPACK_DIR)
+packer.unpack(f"{OUTPUT_DIR}/{APP_NAME}.msix", TMPUNPACK_DIR, skip_validation=CERT_VALIDATE)
