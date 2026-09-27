@@ -40,6 +40,10 @@ Signing
 * [CI/CD pipeline to Sign and Notarize Electron Apps, Sep 2022](https://www.codiga.io/blog/notarize-sign-electron-app/)
 * [Packaging and publishing Intune apps using Winget and Azure Devops CI/CD Pipeline – packaging as code, Nov 2022](https://andrewstaylor.com/2022/11/15/packaging-and-publishing-intune-apps-using-winget-and-azure-devops-ci-cd-pipeline-packaging-as-code/), <https://github.com/andrew-s-taylor/public/blob/main/Powershell%20Scripts/Intune/add-winget-package-pipeline.ps1>
 * [How to upload the build on microsoft intune through azure devops pipelines, Feb 2025](https://stackoverflow.com/questions/79436088/how-to-upload-the-build-on-microsoft-intune-through-azure-devops-pipelines), <https://gist.github.com/Hesamedin/cde8eee8abd0c44e007925c75a2a0b99>
+* Shortcut
+  * [desktop7:Shortcut](https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-desktop7-shortcut)
+  * [Defining Native Shortcuts in MSIX](https://www.advancedinstaller.com/create-native-desktop-shortcuts-in-msix-packages.html)
+  * [Create an application shortcut by running a script using Package Support Framework](https://learn.microsoft.com/en-us/windows/msix/psf/create-shortcut-with-script-package-support-framework), [MSIX - Create Desktop Shortcuts with Package Support Framework and PowerShell, May 2022](https://techcommunity.microsoft.com/blog/modernworkappconsult/msix---create-desktop-shortcuts-with-package-support-framework-and-powershell/3300891)
 
 * [Automatic Code-signing and Notarization for macOS apps using GitHub Actions, Aug 2022](https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/)
 * [Distributing Mac Apps With GitHub Actions, Sep 2023](https://defn.io/2023/09/22/distributing-mac-apps-with-github-actions/)

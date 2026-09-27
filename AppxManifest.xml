@@ -19,6 +19,11 @@
   <Applications>
     <Application Id="chepy.exe" Executable="chepy.exe" uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements DisplayName="Chepy" Description="Test package" Square150x150Logo="logo.png" Square44x44Logo="logo.png" BackgroundColor="#FFFFFF"/>
+      <Extensions>
+        <desktop7:Extension Category="windows.shortcut">
+          <desktop7:Shortcut ExcludeFromShowInNewInstall="false" File="[{Common Programs}]\Chepy-Terminal.lnk" Icon="Chepy.exe" PinToStartMenu="false" Description="Terminal for Chepy"/>
+        </desktop7:Extension>
+      </Extensions>
     </Application>
   </Applications>
 </Package>
