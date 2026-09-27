@@ -11,8 +11,56 @@ variables:
   minor: 0
   build: 0
   revision: $[counter('rev', 0)]
+  pythonVersion: '3.14'
+  SPECNAME: 'chepy'
+  osShort: 'win'
+  architecture: 'x86_64'
+  binaryName: 'chepy.exe'
+  BINARY: 'chepy-win-x86_64-$(Build.SourceBranchName)'
 
 steps:
+  - checkout: self
+    submodules: true
+    clean: true
+
+  - task: UsePythonVersion@0
+    displayName: 'Set up Python $(pythonVersion)'
+    inputs:
+      versionSpec: '$(pythonVersion)'
+      architecture: x64
+
+  - powershell: |
+      python --version
+      python -m pip --version
+      python -m pip install --upgrade pip
+
+      python -m pip install -r requirements.txt
+      python -m pip install '.[extras]'
+    displayName: 'Install dependencies'
+
+  - powershell: |
+      python -m pip install pyinstaller
+      pyinstaller --clean --noconfirm --name "$(SPECNAME)" cli.py
+
+      if (-not (Test-Path "dist\$(SPECNAME)\$(SPECNAME).exe")) {
+        throw "PyInstaller did not produce dist\$(SPECNAME)\$(SPECNAME).exe"
+      }
+      Rename-Item "dist\$(SPECNAME)\$(SPECNAME).exe" "$(BINARY)"
+      Get-ChildItem -Recurse dist | Format-Table FullName, Length
+    displayName: 'Create PyInstaller executable'
+
+  - powershell: |
+      $files = Get-ChildItem "dist\$(SPECNAME)" -File
+
+      foreach ($file in $files) {
+        $hash = (Get-FileHash -Algorithm SHA256 $file.FullName).Hash.ToLower()
+        "$hash  $($file.Name)" |
+          Add-Content "dist\$(SPECNAME).sha256"
+      }
+      Get-Content "dist\$(SPECNAME).sha256"
+    displayName: 'Generate checksum'
+    continueOnError: true
+
   - powershell: |
        # Update appxmanifest. This must be done before the build.
        [xml]$manifest= get-content ".\AppxManifest.xml"
