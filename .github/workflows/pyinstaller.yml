@@ -255,7 +255,6 @@ jobs:
         shell: pwsh
         run: |
           Add-AppxPackage –Register .\AppxManifest.xml
-        continue-on-error: true
 
       - name: Package MSIX - winapp
         run: |
