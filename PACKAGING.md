@@ -44,6 +44,10 @@ Signing
   * [desktop7:Shortcut](https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-desktop7-shortcut)
   * [Defining Native Shortcuts in MSIX](https://www.advancedinstaller.com/create-native-desktop-shortcuts-in-msix-packages.html) - NOK
   * [Create an application shortcut by running a script using Package Support Framework](https://learn.microsoft.com/en-us/windows/msix/psf/create-shortcut-with-script-package-support-framework), [MSIX - Create Desktop Shortcuts with Package Support Framework and PowerShell, May 2022](https://techcommunity.microsoft.com/blog/modernworkappconsult/msix---create-desktop-shortcuts-with-package-support-framework-and-powershell/3300891)
+* Other resources: registry, environment variable, certificate
+  * Does not seem possible natively. Workaround with AD GPO
+  * [Run scripts with the Package Support Framework](https://learn.microsoft.com/en-us/windows/msix/psf/run-scripts-with-package-support-framework), <https://github.com/microsoft/MSIX-PackageSupportFramework/blob/main/fixups/RegLegacyFixups/readme.md>
+  * [Add Environment Variable to MSIX package using PSF Fixups in Packaging Tool - what am I missing? Sep 2025](https://techcommunity.microsoft.com/discussions/msix-discussions/add-environment-variable-to-msix-package-using-psf-fixups-in-packaging-tool---wh/4455852), <https://github.com/microsoft/MSIX-PackageSupportFramework/tree/main/fixups/EnvVarFixup>
 
 * [Automatic Code-signing and Notarization for macOS apps using GitHub Actions, Aug 2022](https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/)
 * [Distributing Mac Apps With GitHub Actions, Sep 2023](https://defn.io/2023/09/22/distributing-mac-apps-with-github-actions/)
