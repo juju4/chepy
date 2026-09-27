@@ -96,5 +96,11 @@ steps:
       sign /fd SHA256 /f $(Agent.TempDirectory)/certificate.pfx /p secret $(Build.ArtifactStagingDirectory)/MsixDesktopApp.msix'
     displayName: 'Sign MSIX Package'
 
+  - task: MicrosoftSecurityDevOps@1
+    displayName: 'Run Microsoft Security DevOps'
+    inputs:
+      tools: 'antimalware,binskim'
+    continueOnError: true
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: drop'
