@@ -42,7 +42,7 @@ Signing
 * [How to upload the build on microsoft intune through azure devops pipelines, Feb 2025](https://stackoverflow.com/questions/79436088/how-to-upload-the-build-on-microsoft-intune-through-azure-devops-pipelines), <https://gist.github.com/Hesamedin/cde8eee8abd0c44e007925c75a2a0b99>
 * Shortcut
   * [desktop7:Shortcut](https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-desktop7-shortcut)
-  * [Defining Native Shortcuts in MSIX](https://www.advancedinstaller.com/create-native-desktop-shortcuts-in-msix-packages.html)
+  * [Defining Native Shortcuts in MSIX](https://www.advancedinstaller.com/create-native-desktop-shortcuts-in-msix-packages.html) - NOK
   * [Create an application shortcut by running a script using Package Support Framework](https://learn.microsoft.com/en-us/windows/msix/psf/create-shortcut-with-script-package-support-framework), [MSIX - Create Desktop Shortcuts with Package Support Framework and PowerShell, May 2022](https://techcommunity.microsoft.com/blog/modernworkappconsult/msix---create-desktop-shortcuts-with-package-support-framework-and-powershell/3300891)
 
 * [Automatic Code-signing and Notarization for macOS apps using GitHub Actions, Aug 2022](https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/)
