@@ -25,7 +25,7 @@ jobs:
             architecture: x86_64
             experimental: false
             binary_name: chepy
-            python_version: "3.12"
+            python_version: "3.14"
     env:
       SPECNAME: chepy
       BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
@@ -192,7 +192,7 @@ jobs:
             architecture: x86_64
             experimental: false
             binary_name: chepy.exe
-            python_version: "3.12"
+            python_version: "3.14"
     env:
       SPECNAME: chepy
       BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
@@ -353,7 +353,7 @@ jobs:
             architecture: arm64
             experimental: false
             binary_name: chepy
-            python_version: "3.12"
+            python_version: "3.14"
     env:
       SPECNAME: chepy
       BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
