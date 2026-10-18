@@ -331,7 +331,7 @@ jobs:
           $dest = "auditMSIWhitelist.ps1"
           Invoke-WebRequest -Uri $url -OutFile $dest
           .\auditMSIWhitelist.ps1 -ReportPath "C:\ReportPath" -ScanAll
-          Get-Content D:\temp\test\test.html 
+          Get-Content D:\ReportPath\MSI_Audit_Report_*.txt
         continue-on-error: true
 
       - name: Upload MSIX
