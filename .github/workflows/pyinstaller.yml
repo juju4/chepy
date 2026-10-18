@@ -76,6 +76,13 @@ jobs:
           for f in blintout/*.json; do cat $f | jq; done
         continue-on-error: true
 
+      - name: Check binary with checksec.py
+        run: |
+          set -x
+          uvx install checksec.py
+          uvx checksec dist/chepy/*
+        continue-on-error: true
+
       - name: Install Cosign
         uses: sigstore/cosign-installer@v4.1.2
         with:
