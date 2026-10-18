@@ -38,8 +38,10 @@ Signing
 * [Configure CI/CD pipeline with YAML file](https://learn.microsoft.com/en-us/windows/msix/desktop/azure-dev-ops)
 * [How to create a basic package manifest for Windows 8](https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/how-to-create-a-basic-package-manifest)
 * [CI/CD pipeline to Sign and Notarize Electron Apps, Sep 2022](https://www.codiga.io/blog/notarize-sign-electron-app/)
+* [Automatically Migrate Applications from ConfigMgr to Intune with the Win32App Migration Tool, Mar 2021](https://byteben.com/bb/automatically-migrate-applications-from-configmgr-to-intune-with-the-win32app-migration-tool/)
 * [Packaging and publishing Intune apps using Winget and Azure Devops CI/CD Pipeline – packaging as code, Nov 2022](https://andrewstaylor.com/2022/11/15/packaging-and-publishing-intune-apps-using-winget-and-azure-devops-ci-cd-pipeline-packaging-as-code/), <https://github.com/andrew-s-taylor/public/blob/main/Powershell%20Scripts/Intune/add-winget-package-pipeline.ps1>
 * [How to upload the build on microsoft intune through azure devops pipelines, Feb 2025](https://stackoverflow.com/questions/79436088/how-to-upload-the-build-on-microsoft-intune-through-azure-devops-pipelines), <https://gist.github.com/Hesamedin/cde8eee8abd0c44e007925c75a2a0b99>
+* [Automating Intune Win32 App Packaging with GitHub Actions, May 2026](https://jocha.se/blog/tech/automating-intune-win32-app-packaging-with-github-actions)
 * Shortcut
   * [desktop7:Shortcut](https://learn.microsoft.com/en-us/uwp/schemas/appxpackage/uapmanifestschema/element-desktop7-shortcut)
   * [Defining Native Shortcuts in MSIX](https://www.advancedinstaller.com/create-native-desktop-shortcuts-in-msix-packages.html) - NOK
@@ -48,6 +50,8 @@ Signing
   * Does not seem possible natively. Workaround with AD GPO
   * [Run scripts with the Package Support Framework](https://learn.microsoft.com/en-us/windows/msix/psf/run-scripts-with-package-support-framework), <https://github.com/microsoft/MSIX-PackageSupportFramework/blob/main/fixups/RegLegacyFixups/readme.md>
   * [Add Environment Variable to MSIX package using PSF Fixups in Packaging Tool - what am I missing? Sep 2025](https://techcommunity.microsoft.com/discussions/msix-discussions/add-environment-variable-to-msix-package-using-psf-fixups-in-packaging-tool---wh/4455852), <https://github.com/microsoft/MSIX-PackageSupportFramework/tree/main/fixups/EnvVarFixup>
+* [Hey, Scripting Guy! How Can I Sign Windows PowerShell Scripts with an Enterprise Windows PKI? (Part 1 of 2), Jun 2010](https://devblogs.microsoft.com/scripting/hey-scripting-guy-how-can-i-sign-windows-powershell-scripts-with-an-enterprise-windows-pki-part-1-of-2/)
+* [Fighting through Setting up Microsoft Trusted Signing, Jul 2025](https://weblog.west-wind.com/posts/2025/Jul/20/Fighting-through-Setting-up-Microsoft-Trusted-Signing)
 
 * [Automatic Code-signing and Notarization for macOS apps using GitHub Actions, Aug 2022](https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/)
 * [Distributing Mac Apps With GitHub Actions, Sep 2023](https://defn.io/2023/09/22/distributing-mac-apps-with-github-actions/)
@@ -57,3 +61,6 @@ Signing
 
 * [Effing package management! Build packages for multiple platforms (deb, rpm, etc) with great ease and sanity.](https://github.com/jordansissel/fpm) (ruby)
 * Fedora [Packaging Tutorial 1: banner](https://docs.fedoraproject.org/en-US/package-maintainers/Packaging_Tutorial_1_banner/)
+
+* [pyinstaller reproducible build](https://github.com/pyinstaller/pyinstaller/issues/1668)
+* [SLSA Levels Explained: A Practical Compliance Checklist for Engineering Teams, Feb 2026](https://secure-pipelines.com/ci-cd-security/slsa-levels-explained-practical-compliance-checklist/)
