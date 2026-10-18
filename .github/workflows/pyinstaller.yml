@@ -321,6 +321,16 @@ jobs:
           sarif_file: ${{ steps.msdo.outputs.sarifFile }}
         continue-on-error: true
 
+      - name: Run MSIAudit
+        shell: pwsh
+        run: |
+          $url = "https://raw.githubusercontent.com/garatc/MSIAudit/47cb1971a4f38f7093b68c618a33f704412e7a91/auditMSIWhitelist.ps1"
+          $dest = "auditMSIWhitelist.ps1"
+          Invoke-WebRequest -Uri $url -OutFile $dest
+          .\auditMSIWhitelist.ps1 -ReportPath "C:\ReportPath" -ScanAll
+          Get-Content D:\temp\test\test.html 
+        continue-on-error: true
+
       - name: Upload MSIX
         uses: actions/upload-artifact@v7
         with:
