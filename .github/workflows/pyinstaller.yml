@@ -1,7 +1,10 @@
 ---
 name: pyinstaller
 
-on: [push]
+on:
+  push:
+  # pull_request:
+  workflow_dispatch:
 
 permissions:
   id-token: write
