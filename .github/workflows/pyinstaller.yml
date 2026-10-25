@@ -43,6 +43,7 @@ jobs:
             github.com:443
             packages.microsoft.com:443
             pypi.org:443
+            raw.githubusercontent.com:443
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
@@ -223,6 +224,7 @@ jobs:
             github.com:443
             packages.microsoft.com:443
             pypi.org:443
+            54.185.253.63:443
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
@@ -397,6 +399,10 @@ jobs:
             github.com:443
             packages.microsoft.com:443
             pypi.org:443
+            bag.itunes.apple.com:443
+            apps.mzstatic.com:443
+            api.apple-cloudkit.com:443
+            raw.githubusercontent.com:443
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
