@@ -31,7 +31,20 @@ jobs:
       BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Harden Runner
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2  # v2.22.2
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            azure.archive.ubuntu.com:80
+            dl.google.com:443
+            esm.ubuntu.com:443
+            files.pythonhosted.org:443
+            github.com:443
+            packages.microsoft.com:443
+            pypi.org:443
+      - name: Checkout code
+        uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
         uses: actions/setup-python@v7
         with:
@@ -198,7 +211,20 @@ jobs:
       BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Harden Runner
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2  # v2.22.2
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            azure.archive.ubuntu.com:80
+            dl.google.com:443
+            esm.ubuntu.com:443
+            files.pythonhosted.org:443
+            github.com:443
+            packages.microsoft.com:443
+            pypi.org:443
+      - name: Checkout code
+        uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
         uses: actions/setup-python@v7
         with:
@@ -359,7 +385,20 @@ jobs:
       BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Harden Runner
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2  # v2.22.2
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            azure.archive.ubuntu.com:80
+            dl.google.com:443
+            esm.ubuntu.com:443
+            files.pythonhosted.org:443
+            github.com:443
+            packages.microsoft.com:443
+            pypi.org:443
+      - name: Checkout code
+        uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
         uses: actions/setup-python@v7
         with:
