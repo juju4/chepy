@@ -1,0 +1,44 @@
+---
+# https://arxiv.org/html/2601.14455v2
+name: Workflow checks
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  scan-workflows:
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install actionlint
+        run: |
+          gh release download --repo rhysd/actionlint --pattern '*_linux_amd64.tar.gz' v1.7.12
+          tar xf actionlint_1.7.12_linux_amd64.tar.gz
+          ./actionlint -version
+          gh attestation verify -R rhysd/actionlint actionlint_1.7.12_linux_amd64.tar.gz
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Run actionlint
+        run: ./actionlint .github/workflows/*.yml
+
+      - name: poutine - GitHub Actions SAST
+        uses: boostsecurityio/poutine-action@e240ebd3eff8b2db5a8e5f6b28f58739d7db2247 # tag=v1.1.4
+
+      - name: Upload poutine SARIF file
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          sarif_file: results.sarif
+          category: poutine
+
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@85b2b9fb8e3325e7a23d7d0a9d7ba5ae0f999e3e # v0.7.1
