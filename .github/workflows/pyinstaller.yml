@@ -444,7 +444,19 @@ jobs:
       - name: Verify cosign signature
         run: |
           cosign verify-blob --certificate-identity-regexp "https://github.com/juju4/chepy/.github/workflows/pyinstaller.yml@refs/heads/*" --certificate-oidc-issuer "https://token.actions.githubusercontent.com" --bundle dist/artifacts.sigstore.json dist/chepy/$BINARY
-        if: matrix.os != 'windows-latest'
+
+      - name: Package macOS app
+        id: package
+        uses: remarkablemark/package-macos-app@945ec5cd03bf964e447ab5981fd38d39af1974ee  # tag=v1.1.1
+        with:
+          binary: dist/${{ SPECNAME }}/${{ BINARY }}
+          version: ${{ github.ref_name }}
+
+      - name: Zip app bundle
+        run: ditto -c -k --keepParent "$APP_PATH" dist/$BINARY.zip
+        env:
+          APP_PATH: ${{ steps.package.outputs.app-path }}
+
       - uses: actions/upload-artifact@v7
         with:
           name: ${{ env.BINARY }}

@@ -58,6 +58,10 @@ Signing
 * [CI-Ready macOS Signing: Combining Apple Distribution & Installer Certificates for GitHub Actions, Mar 2025](https://msicc.net/ci-ready-macos-signing-combining-certs-for-github-actions/)
 * [Signing and Notarizing with GitHub Actions](https://gregoryszorc.com/docs/apple-codesign/stable/apple_codesign_github_actions.html)
 * [Automating packaging and software distribution on macOS.](https://github.com/autopkg/autopkg)
+* [Packages a prebuilt binary into an unsigned macOS app bundle with GitHub Actions.](https://github.com/remarkablemark/package-macos-app)
+* [The Modern macOS Pkg Builder](https://github.com/alessio/bakepkg)
+* [macOS command-line tool for building Apple installer packages from version-control-friendly project directories](https://github.com/codecarton/swiftpkg)
+* [Guidance on how to properly package software for macOS](https://github.com/n8felton/proper-packaging-principles)
 
 * [Effing package management! Build packages for multiple platforms (deb, rpm, etc) with great ease and sanity.](https://github.com/jordansissel/fpm) (ruby)
 * Fedora [Packaging Tutorial 1: banner](https://docs.fedoraproject.org/en-US/package-maintainers/Packaging_Tutorial_1_banner/)
