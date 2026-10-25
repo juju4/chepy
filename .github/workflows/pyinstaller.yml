@@ -449,7 +449,7 @@ jobs:
         id: package
         uses: remarkablemark/package-macos-app@945ec5cd03bf964e447ab5981fd38d39af1974ee  # tag=v1.1.1
         with:
-          binary: dist/${{ SPECNAME }}/${{ BINARY }}
+          binary: dist/${{ env.SPECNAME }}/${{ env.BINARY }}
           version: ${{ github.ref_name }}
 
       - name: Zip app bundle
