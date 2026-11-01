@@ -230,6 +230,7 @@ jobs:
         with:
           egress-policy: block
           allowed-endpoints: >
+            api.nuget.org:443
             azure.archive.ubuntu.com:80
             cdn.powershellgallery.com:443
             dl.google.com:443
