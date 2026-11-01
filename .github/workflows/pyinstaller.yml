@@ -404,6 +404,7 @@ jobs:
     env:
       SPECNAME: chepy
       BINARY: ${{ matrix.binary_name }}-${{ matrix.os_short }}-${{ matrix.architecture }}-${{github.ref_name}}
+      PKG_VERSION: 7.6.0
 
     steps:
       - name: Harden Runner
@@ -481,7 +482,7 @@ jobs:
         uses: remarkablemark/package-macos-app@945ec5cd03bf964e447ab5981fd38d39af1974ee  # tag=v1.1.1
         with:
           binary: dist/${{ env.SPECNAME }}/${{ env.BINARY }}
-          version: ${{ github.ref_name }}
+          version: ${{ env.PKG_VERSION }}
 
       - name: Zip app bundle
         run: ditto -c -k --keepParent "$APP_PATH" dist/$BINARY.zip
