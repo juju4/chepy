@@ -36,6 +36,7 @@ jobs:
         with:
           egress-policy: block
           allowed-endpoints: >
+            140.82.116.6:443
             azure.archive.ubuntu.com:80
             dl.google.com:443
             esm.ubuntu.com:443
