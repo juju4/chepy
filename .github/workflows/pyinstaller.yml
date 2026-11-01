@@ -244,6 +244,7 @@ jobs:
             ipv6.msftncsi.com:443
             crl.microsoft.com:443
             client.wns.windows.com:443
+            raw.githubusercontent.com:443
             release-assets.githubusercontent.com:443
             dfdinfra-afdendpoint-prod-d5fqbucbg7fue0cf.z01.azurefd.net:443
             www.powershellgallery.com:443
