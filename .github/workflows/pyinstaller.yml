@@ -44,6 +44,7 @@ jobs:
             packages.microsoft.com:443
             pypi.org:443
             raw.githubusercontent.com:443
+            tuf-repo-cdn.sigstore.dev:443
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
@@ -225,6 +226,14 @@ jobs:
             packages.microsoft.com:443
             pypi.org:443
             54.185.253.63:443
+            ocsp.sectigo.com:443
+            crl.sectigo.com:443
+            ipv6.msftncsi.com:443
+            crl.microsoft.com:443
+            client.wns.windows.com:443
+            release-assets.githubusercontent.com:443
+            dfdinfra-afdendpoint-prod-d5fqbucbg7fue0cf.z01.azurefd.net:443
+
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
@@ -403,6 +412,8 @@ jobs:
             apps.mzstatic.com:443
             api.apple-cloudkit.com:443
             raw.githubusercontent.com:443
+            proxy.safebrowsing.apple:443
+            tuf-repo-cdn.sigstore.dev:443
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
