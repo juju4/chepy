@@ -42,12 +42,17 @@ jobs:
             files.pythonhosted.org:443
             fulcio.sigstore.dev:443
             github.com:443
+            hugovk.github.io:443
+            packages.ecosyste.ms:443
             packages.microsoft.com:443
             pypi.org:443
             raw.githubusercontent.com:443
             release-assets.githubusercontent.com:443
             releases.astral.sh:443
+            timestamp.sigstore.dev:443
             tuf-repo-cdn.sigstore.dev:443
+            whois.iana.org:443
+            whois.denic.de:443
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
@@ -236,7 +241,7 @@ jobs:
             client.wns.windows.com:443
             release-assets.githubusercontent.com:443
             dfdinfra-afdendpoint-prod-d5fqbucbg7fue0cf.z01.azurefd.net:443
-
+            www.powershellgallery.com:443
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Python ${{ matrix.python_version }}
@@ -418,6 +423,7 @@ jobs:
             raw.githubusercontent.com:443
             proxy.safebrowsing.apple:443
             release-assets.githubusercontent.com:443
+            timestamp.sigstore.dev:443
             tuf-repo-cdn.sigstore.dev:443
       - name: Checkout code
         uses: actions/checkout@v7
