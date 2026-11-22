@@ -99,6 +99,12 @@ jobs:
           sha256sum dist/chepy/* | tee dist/chepy.sha256
         continue-on-error: true
 
+      - name: Generate checksums ndjson with hashdir
+        run: |
+          pip install git+https://github.com/juju4/hashdir@devel
+          hashdir -m md5,sha1,sha512,tlsh --workers 2 -o dist/chepy.ndjson dist/*
+        continue-on-error: true
+
       - name: Check binary with blint
         run: |
           set -x
