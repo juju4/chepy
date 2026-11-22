@@ -101,8 +101,10 @@ jobs:
 
       - name: Generate checksums ndjson with hashdir
         run: |
+          set -x
           pip install git+https://github.com/juju4/hashdir@devel
-          hashdir -m md5,sha1,sha512,tlsh --workers 2 -o dist/chepy.ndjson dist/*
+          hashdir -m md5,sha1,sha512,tlsh --workers 2 --log-level debug -o dist/chepy.ndjson dist/*
+          cat dist/chepy.ndjson
         continue-on-error: true
 
       - name: Check binary with blint
